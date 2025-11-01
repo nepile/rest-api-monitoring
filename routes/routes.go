@@ -15,6 +15,9 @@ func Setup(r *gin.Engine, cfg *config.Config) {
 
 		api.Use(middleware.JWTMiddleware(cfg))
 		{
+			api.POST("/endpoints", controllers.AddEndpoint)
+			api.GET("/endpoints", controllers.ListEndpoints)
+			api.GET("/endpoints/:id/logs", controllers.GetEndpointLogs)
 		}
 	}
 }

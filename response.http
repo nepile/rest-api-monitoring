@@ -18,3 +18,29 @@ Content-Type: application/json
     "email": "test@example.com",
     "password": "my-strong-pass"
 }
+
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI2MjQ4NDMsImlhdCI6MTc2MjAyMDA0Mywic3ViIjoiNzg4NDA0YjktNWEwMy00YWI3LWFiYjktYjFlMmQzOGNkMWQ4In0.OgvN4j6UmC5krJPiMWemCJGNySmIUMzhMGtIT2BeNSs
+### Create Endpoint /api/endpoints
+POST {{baseUrl}}/api/endpoints
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "url": "https://api.github.com",
+    "expected_status": 200,
+    "check_interval": 60
+}
+
+
+### Get All Endpoint /api/endpoints
+GET {{baseUrl}}/api/endpoints
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+@endpoint = 317464e5-d381-40f3-b980-b783e9a9ff48
+### Get All Checklogs /api/endpoints/:id/logs
+GET {{baseUrl}}/api/endpoints/{{endpoint}}/logs
+Authorization: Bearer {{token}}
+Content-Type: application/json
