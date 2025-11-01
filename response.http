@@ -27,7 +27,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "url": "https://api.github.com",
+    "url": "http://localhost:8080/endpoints",
     "expected_status": 200,
     "check_interval": 60
 }

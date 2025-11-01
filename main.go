@@ -7,6 +7,7 @@ import (
 	"github.com/nepile/api-monitoring/config"
 	"github.com/nepile/api-monitoring/database"
 	"github.com/nepile/api-monitoring/routes"
+	"github.com/nepile/api-monitoring/services"
 )
 
 func main() {
@@ -15,6 +16,8 @@ func main() {
 		log.Fatal(err)
 	}
 	database.Connect(cfg.DatabaseURL)
+
+	services.StartScheduler(cfg)
 
 	r := gin.Default()
 	routes.Setup(r, cfg)
