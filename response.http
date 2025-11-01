@@ -27,7 +27,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "url": "http://localhost:8080/endpoints",
+    "url": "http://localhost:8080/api/endpoints",
     "expected_status": 200,
     "check_interval": 60
 }
