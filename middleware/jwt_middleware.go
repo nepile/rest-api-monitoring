@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/nepile/api-monitoring/config"
+	"github.com/nepile/api-monitoring/infrastructure/config"
 	"github.com/nepile/api-monitoring/utils"
 )
 

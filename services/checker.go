@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/nepile/api-monitoring/database"
+	"github.com/nepile/api-monitoring/infrastructure/db"
 	"github.com/nepile/api-monitoring/models"
 )
 
@@ -18,7 +18,7 @@ func CheckEndpoint(e models.Endpoint) (int, float64, error) {
 	res, err := client.Get(e.URL)
 	duration := time.Since(start).Seconds() * 1000
 	if err != nil {
-		database.DB.Create(&models.CheckLog{
+		db.DB.Create(&models.CheckLog{
 			EndpointID:   e.ID,
 			StatusCode:   0,
 			ResponseTime: duration,
@@ -30,7 +30,7 @@ func CheckEndpoint(e models.Endpoint) (int, float64, error) {
 	_, _ = io.Copy(io.Discard, res.Body)
 	res.Body.Close()
 
-	database.DB.Create(&models.CheckLog{
+	db.DB.Create(&models.CheckLog{
 		EndpointID:   e.ID,
 		StatusCode:   res.StatusCode,
 		ResponseTime: duration,

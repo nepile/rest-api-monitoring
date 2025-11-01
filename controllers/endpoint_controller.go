@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/nepile/api-monitoring/database"
+	"github.com/nepile/api-monitoring/infrastructure/db"
 	"github.com/nepile/api-monitoring/models"
 )
 
@@ -35,7 +35,7 @@ func AddEndpoint(c *gin.Context) {
 		ep.CheckInterval = 60
 	}
 
-	if err := database.DB.Create(&ep).Error; err != nil {
+	if err := db.DB.Create(&ep).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -46,13 +46,13 @@ func AddEndpoint(c *gin.Context) {
 func ListEndpoints(c *gin.Context) {
 	userID := c.GetString("user_id")
 	var eps []models.Endpoint
-	database.DB.Where("user_id = ?", userID).Find(&eps)
+	db.DB.Where("user_id = ?", userID).Find(&eps)
 	c.JSON(http.StatusOK, gin.H{"endpoints": eps})
 }
 
 func GetEndpointLogs(c *gin.Context) {
 	id := c.Param("id")
 	var logs []models.CheckLog
-	database.DB.Where("endpoint_id = ?", id).Order("checked_at desc").Limit(50).Find(&logs)
+	db.DB.Where("endpoint_id = ?", id).Order("checked_at desc").Limit(50).Find(&logs)
 	c.JSON(http.StatusOK, gin.H{"logs": logs})
 }
