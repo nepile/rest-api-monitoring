@@ -3,6 +3,7 @@ package database
 import (
 	"log"
 
+	"github.com/nepile/api-monitoring/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,7 +18,11 @@ func Connect(dsn string) {
 
 	DB = db
 
-	err = DB.AutoMigrate()
+	err = DB.AutoMigrate(
+		&models.User{},
+		&models.Endpoint{},
+		&models.CheckLog{},
+	)
 	if err != nil {
 		log.Fatalf("auto migrate failed: %v", err)
 	}
