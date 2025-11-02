@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nepile/api-monitoring/config"
-	"github.com/nepile/api-monitoring/database"
+	"github.com/nepile/api-monitoring/infrastructure/config"
+	"github.com/nepile/api-monitoring/infrastructure/db"
 	"github.com/nepile/api-monitoring/models"
 	"github.com/nepile/api-monitoring/utils"
 	"golang.org/x/crypto/bcrypt"
@@ -35,7 +35,7 @@ func Register(c *gin.Context) {
 		Password: string(hashed),
 	}
 
-	if err := database.DB.Create(&user).Error; err != nil {
+	if err := db.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,7 +52,7 @@ func Login(c *gin.Context) {
 
 	var user models.User
 
-	if err := database.DB.Where("email = ?", body.Email).First(&user).Error; err != nil {
+	if err := db.DB.Where("email = ?", body.Email).First(&user).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
 		return
 	}

@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nepile/api-monitoring/config"
-	"github.com/nepile/api-monitoring/database"
+	"github.com/nepile/api-monitoring/infrastructure/config"
+	"github.com/nepile/api-monitoring/infrastructure/db"
 	"github.com/nepile/api-monitoring/routes"
 	"github.com/nepile/api-monitoring/services"
 )
@@ -15,7 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	database.Connect(cfg.DatabaseURL)
+	db.Connect(cfg.DatabaseURL)
 
 	services.StartScheduler(cfg)
 

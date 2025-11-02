@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nepile/api-monitoring/config"
+	"github.com/nepile/api-monitoring/infrastructure/config"
 )
 
 func SendTelegramAlert(cfg *config.Config, message string) error {

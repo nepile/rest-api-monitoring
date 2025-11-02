@@ -4,8 +4,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/nepile/api-monitoring/config"
-	"github.com/nepile/api-monitoring/database"
+	"github.com/nepile/api-monitoring/infrastructure/config"
+	"github.com/nepile/api-monitoring/infrastructure/db"
 	"github.com/nepile/api-monitoring/models"
 	"github.com/nepile/api-monitoring/utils"
 )
@@ -24,7 +24,7 @@ func StartScheduler(cfg *config.Config) {
 
 func runChecks(cfg *config.Config) {
 	var endpoints []models.Endpoint
-	if err := database.DB.Find(&endpoints).Error; err != nil {
+	if err := db.DB.Find(&endpoints).Error; err != nil {
 		log.Println("failed fetch endpoints:", err)
 		return
 	}
@@ -32,7 +32,7 @@ func runChecks(cfg *config.Config) {
 	for _, ep := range endpoints {
 		go func(e models.Endpoint) {
 			var last models.CheckLog
-			if err := database.DB.Where("endpoint_id = ?", e.ID).Order("checked_at desc").First(&last).Error; err != nil {
+			if err := db.DB.Where("endpoint_id = ?", e.ID).Order("checked_at desc").First(&last).Error; err != nil {
 				elapsed := time.Since(last.CheckedAt).Seconds()
 				if int(elapsed) < e.CheckInterval {
 					return

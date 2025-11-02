@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nepile/api-monitoring/config"
 	"github.com/nepile/api-monitoring/controllers"
+	"github.com/nepile/api-monitoring/infrastructure/config"
 	"github.com/nepile/api-monitoring/middleware"
 )
 
